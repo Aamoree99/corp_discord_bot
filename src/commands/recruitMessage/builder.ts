@@ -10,4 +10,3 @@ export const data = new SlashCommandBuilder()
             .addChannelTypes(ChannelType.GuildText)
             .setRequired(true)
     );
-я

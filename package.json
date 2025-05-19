@@ -12,6 +12,7 @@
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.43.1",
+    "node-cron": "^4.0.5",
     "node-fetch": "^3.3.2",
     "pg": "^8.11.5",
     "postgres": "^3.4.5"

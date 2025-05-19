@@ -5,6 +5,7 @@ import { registerInteractionHandler } from './events/interactionCreate';
 import { registerGlobalCommands } from './config/commands';
 import {registerGuildCreateHandler} from "./events/guildCreate";
 import {checkOpsAndPing} from "./utils/checkOps";
+import cron from 'node-cron';
 
 const client = new Client({
     intents: [
@@ -23,6 +24,6 @@ await registerGlobalCommands(); // ← ДО login()
 
 client.login(config.token);
 
-setInterval(() => {
+cron.schedule('*/15 * * * *', () => {
     checkOpsAndPing(client).catch(console.error);
-}, 15 * 60 * 1000);
+});
