@@ -1,0 +1,26 @@
+{
+  "name": "eve-discord-bot",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "start": "node build/index.js",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.43.1",
+    "node-fetch": "^3.3.2",
+    "pg": "^8.11.5",
+    "postgres": "^3.4.5"
+  },
+  "devDependencies": {
+    "@types/i18next": "^12.1.0",
+    "@types/node": "^20.11.30",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
