@@ -1,7 +1,7 @@
 import { Client } from 'discord.js';
-import { requireGuildActive } from '../utils/guards';
-import { commandHandlers } from '../commands';
-import { getButtonHandler, getModalHandler } from '../components';
+import { requireGuildActive } from '../utils/guards.js';
+import { commandHandlers } from '../commands/index.js';
+import { getButtonHandler, getModalHandler } from '../components/index.js';
 
 export function registerInteractionHandler(client: Client) {
     client.on('interactionCreate', async (interaction) => {

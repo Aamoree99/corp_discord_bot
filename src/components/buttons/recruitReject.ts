@@ -6,8 +6,8 @@ import {
     ActionRowBuilder,
     PermissionFlagsBits,
 } from 'discord.js';
-import { getGuildSettings } from '../../db/queries/getGuildSettings';
-import { getLocale } from '../../locales';
+import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
+import { getLocale } from '../../locales/index.js';
 
 export async function handle(interaction: ButtonInteraction) {
     const [_, __, recruitIdStr] = interaction.customId.split(':');

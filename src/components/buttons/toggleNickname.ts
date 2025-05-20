@@ -1,5 +1,5 @@
 import { ButtonInteraction } from 'discord.js';
-import { getGuildSettings, upsertGuildSettings } from '../../db/queries/getGuildSettings';
+import { getGuildSettings, upsertGuildSettings } from '../../db/queries/getGuildSettings.js';
 
 export const customId = 'setup:toggle-nickname';
 

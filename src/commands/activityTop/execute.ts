@@ -1,9 +1,9 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
-import { db } from '../../db/client';
-import { ops, opResponses, pings, pingResponses } from '../../db/schema';
+import { db } from '../../db/client.js';
+import { ops, opResponses, pings, pingResponses } from '../../db/schema.js';
 import { eq, and, gte, lt, inArray } from 'drizzle-orm';
-import { getGuildSettings } from '../../db/queries/getGuildSettings';
-import { getLocale } from '../../locales';
+import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
+import { getLocale } from '../../locales/index.js'; // если locales — директория с index.ts
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const guild = interaction.guild;

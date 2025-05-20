@@ -6,10 +6,10 @@ import {
     EmbedBuilder
 } from 'discord.js';
 
-import { db } from '../../db/client';
-import { pings } from '../../db/schema';
-import { getGuildSettings } from '../../db/queries/getGuildSettings';
-import { getLocale } from '../../locales';
+import { db } from '../../db/client.js';
+import { pings } from '../../db/schema.js';
+import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
+import { getLocale } from '../../locales/index.js'; // если locales содержит index.ts
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const settings = await getGuildSettings(interaction.guildId!);

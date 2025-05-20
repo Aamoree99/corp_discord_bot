@@ -1,5 +1,5 @@
-import { db } from '../client';
-import { guildSettings } from '../schema';
+import { db } from '../client.js';
+import { guildSettings } from '../schema.js';
 import { eq } from 'drizzle-orm';
 
 export async function getGuildSettings(guildId: string) {

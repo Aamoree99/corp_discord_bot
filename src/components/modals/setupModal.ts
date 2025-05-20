@@ -1,6 +1,6 @@
 import { ModalSubmitInteraction } from 'discord.js';
-import {getGuildSettings, upsertGuildSettings} from '../../db/queries/getGuildSettings';
-import { getLocale } from '../../locales';
+import {getGuildSettings, upsertGuildSettings} from '../../db/queries/getGuildSettings.js';
+import { getLocale } from '../../locales/index.js';
 
 export const customId = 'setup:modal';
 

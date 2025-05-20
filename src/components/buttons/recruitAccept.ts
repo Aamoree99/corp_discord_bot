@@ -2,11 +2,11 @@ import {
     ButtonInteraction,
     TextChannel,
 } from 'discord.js';
-import { db } from '../../db/client';
-import { recruits } from '../../db/schema';
+import { db } from '../../db/client.js';
+import { recruits } from '../../db/schema.js';
 import { and, eq } from 'drizzle-orm';
-import { getGuildSettings } from '../../db/queries/getGuildSettings';
-import { getLocale } from '../../locales';
+import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
+import { getLocale } from '../../locales/index.js'; // если locales — папка с index.ts
 
 export async function handle(interaction: ButtonInteraction) {
     const [_, __, recruitIdStr] = interaction.customId.split(':');

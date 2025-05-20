@@ -39,16 +39,16 @@ A modular Discord bot designed for **EVE Online** communities, built with **Type
 
 ## Commands
 
-| Command                | Description                                         | Access        |
-|------------------------|-----------------------------------------------------|---------------|
-| `/setup`               | Configure guild settings (roles, channels, language) | Officers only |
-| `/setup-recruit-message` | Send recruit message to a specific channel          | Officers only |
+| Command                  | Description                                          | Access        |
+|--------------------------|------------------------------------------------------|---------------|
+| `/setup`                 | Configure guild settings (roles, channels, language) | Officers only |
+| `/setup-recruit-message` | Send recruit message to a specific channel           | Officers only |
 | `/recruit-history`       | View recruitment application history                 | Officers only |
-| `/list-ops`              | List upcoming operations/events                       | Everyone      |
-| `/create-op`             | Create a new operation/event                          | Officers only |
+| `/list-ops`              | List upcoming operations/events                      | Everyone      |
+| `/create-op`             | Create a new operation/event                         | Officers only |
 | `/ping`                  | Send a fleet ping with interactive buttons           | Officers only |
-| `/activity`              | Show activity statistics for a user                   | Officers only |
-| `/activity-top`          | Show top active users leaderboard                      | Officers only |
+| `/activity`              | Show activity statistics for a user                  | Officers only |
+| `/activity-top`          | Show top active users leaderboard                    | Officers only |
 
 ---
 

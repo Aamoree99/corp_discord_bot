@@ -5,11 +5,11 @@ import {
     NewsChannel,
     ThreadChannel,
 } from 'discord.js';
-import { db } from '../../db/client';
-import { pingResponses, pings } from '../../db/schema';
+import { db } from '../../db/client.js';
+import { pingResponses, pings } from '../../db/schema.js';
 import { eq } from 'drizzle-orm';
-import { getGuildSettings } from '../../db/queries/getGuildSettings';
-import { getLocale } from '../../locales';
+import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
+import { getLocale } from '../../locales/index.js'; // если это директория с index.ts
 
 export const customId = 'ping:';
 

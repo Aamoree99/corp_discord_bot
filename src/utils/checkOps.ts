@@ -1,9 +1,9 @@
-import { db } from '../db/client';
-import { ops, opResponses } from '../db/schema';
+import { db } from '../db/client.js';
+import { ops, opResponses } from '../db/schema.js';
 import { eq, and, lte } from 'drizzle-orm';
 import { Client, TextChannel, NewsChannel, ThreadChannel } from 'discord.js';
-import { getGuildSettings } from '../db/queries/getGuildSettings';
-import { getLocale } from '../locales';
+import { getGuildSettings } from '../db/queries/getGuildSettings.js';
+import { getLocale } from '../locales/index.js'; // если `locales` — это папка с `index.ts`
 
 export async function checkOpsAndPing(client: Client) {
     const now = new Date();

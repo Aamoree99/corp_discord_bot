@@ -1,9 +1,9 @@
-import { en } from './en';
-import { ru } from './ru';
-import { de } from './de';
-import { fr } from './fr';
-import { es } from './es';
-import { cz } from './cz';
+import { en } from './en.js';
+import { ru } from './ru.js';
+import { de } from './de.js';
+import { fr } from './fr.js';
+import { es } from './es.js';
+import { cz } from './cz.js';
 
 export const locales = {
     en,

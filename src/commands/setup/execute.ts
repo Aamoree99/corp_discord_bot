@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction } from 'discord.js';
-import { getGuildSettings } from '../../db/queries/getGuildSettings';
-import { formatSettingsEmbed, getSetupComponents } from './utils';
+import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
+import { formatSettingsEmbed, getSetupComponents } from './utils.js';
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const guildId = interaction.guildId!;

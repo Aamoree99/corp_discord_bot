@@ -5,8 +5,8 @@ import {
     ButtonStyle,
     EmbedBuilder, TextChannel,
 } from 'discord.js';
-import { getGuildSettings } from '../../db/queries/getGuildSettings';
-import { getLocale } from '../../locales';
+import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
+import { getLocale } from '../../locales/index.js'; // если locales содержит index.ts
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const channel = interaction.options.getChannel('channel', true);

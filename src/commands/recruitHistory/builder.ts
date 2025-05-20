@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { getLocale } from '../../locales';
+import { getLocale } from '../../locales/index.js';
 
 export function buildRecruitHistoryCommand(language: string) {
     const t = getLocale(language);

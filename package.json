@@ -21,6 +21,7 @@
     "@types/i18next": "^12.1.0",
     "@types/node": "^20.11.30",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }

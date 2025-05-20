@@ -7,11 +7,11 @@ import {
     ButtonBuilder,
     ButtonStyle,
 } from 'discord.js';
-import { getGuildSettings } from '../../db/queries/getGuildSettings';
-import { getLocale } from '../../locales';
-import { db } from '../../db/client';
-import { recruits } from '../../db/schema';
-import { getCharacterId } from '../../utils/esi';
+import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
+import { getLocale } from '../../locales/index.js'; // если locales — директория с index.ts
+import { db } from '../../db/client.js';
+import { recruits } from '../../db/schema.js';
+import { getCharacterId } from '../../utils/esi.js';
 
 export const customId = 'recruit:form';
 

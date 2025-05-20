@@ -1,6 +1,6 @@
 import { Client, Guild } from 'discord.js';
-import { db } from '../db/client';
-import { guildSettings } from '../db/schema';
+import { db } from '../db/client.js';
+import { guildSettings } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
 
 export function registerGuildCreateHandler(client: Client) {

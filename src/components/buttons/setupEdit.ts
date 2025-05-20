@@ -6,8 +6,8 @@ import {
     ActionRowBuilder,
 } from 'discord.js';
 
-import { getGuildSettings } from '../../db/queries/getGuildSettings';
-import { getLocale } from '../../locales';
+import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
+import { getLocale } from '../../locales/index.js';
 
 export const customId = 'setup:edit';
 

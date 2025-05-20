@@ -1,14 +1,13 @@
-import * as setupEdit from './buttons/setupEdit';
-import * as toggleNickname from './buttons/toggleNickname';
-import * as recruitApply from './buttons/recruitApply';
-import * as recruitAccept from './buttons/recruitAccept';
-import * as recruitReject from './buttons/recruitReject';
-import * as opResponse from './buttons/opResponse';
-import * as pingResponse from './buttons/pingResponse'; // 🆕
-
-import * as setupModal from './modals/setupModal';
-import * as recruitForm from './modals/recruitForm';
-import * as recruitRejectReason from './modals/recruitRejectReason';
+import * as setupEdit from './buttons/setupEdit.js';
+import * as toggleNickname from './buttons/toggleNickname.js';
+import * as recruitApply from './buttons/recruitApply.js';
+import * as recruitAccept from './buttons/recruitAccept.js';
+import * as recruitReject from './buttons/recruitReject.js';
+import * as opResponse from './buttons/opResponse.js';
+import * as pingResponse from './buttons/pingResponse.js';
+import * as setupModal from './modals/setupModal.js';
+import * as recruitForm from './modals/recruitForm.js';
+import * as recruitRejectReason from './modals/recruitRejectReason.js';
 
 function match(customId: string, handlers: Record<string, (i: any) => any>) {
     return Object.entries(handlers).find(([key]) => customId.startsWith(key))?.[1];

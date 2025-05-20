@@ -1,6 +1,6 @@
 import { Interaction, CacheType, BaseInteraction, ChatInputCommandInteraction } from 'discord.js';
-import { db } from '../db/client';
-import { guildSettings } from '../db/schema';
+import { db } from '../db/client.js';
+import { guildSettings } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
 
 export async function requireGuildActive(interaction: BaseInteraction): Promise<boolean> {

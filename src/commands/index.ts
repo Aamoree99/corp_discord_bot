@@ -1,26 +1,26 @@
-import { data as setupData } from './setup/builder';
-import { execute as setupExecute } from './setup/execute';
+import { data as setupData } from './setup/builder.js';
+import { execute as setupExecute } from './setup/execute.js';
 
-import { data as recruitMsgData } from './recruitMessage/builder';
-import { execute as recruitMsgExecute } from './recruitMessage/execute';
+import { data as recruitMsgData } from './recruitMessage/builder.js';
+import { execute as recruitMsgExecute } from './recruitMessage/execute.js';
 
-import { buildRecruitHistoryCommand } from './recruitHistory/builder';
-import { execute as recruitHistoryExecute } from './recruitHistory/execute';
+import { buildRecruitHistoryCommand } from './recruitHistory/builder.js';
+import { execute as recruitHistoryExecute } from './recruitHistory/execute.js';
 
-import { data as createOpData } from './ops/createOp';
-import { execute as createOpExecute } from './ops/createOp';
+import { data as createOpData } from './ops/createOp.js';
+import { execute as createOpExecute } from './ops/createOp.js';
 
-import { data as listOpsData } from './ops/listOps';
-import { execute as listOpsExecute } from './ops/listOps';
+import { data as listOpsData } from './ops/listOps.js';
+import { execute as listOpsExecute } from './ops/listOps.js';
 
-import { data as pingData } from './pings/builder';
-import { execute as pingExecute } from './pings/execute';
+import { data as pingData } from './pings/builder.js';
+import { execute as pingExecute } from './pings/execute.js';
 
-import { data as activityData } from './activity/builder';
-import { execute as activityExecute } from './activity/execute';
+import { data as activityData } from './activity/builder.js';
+import { execute as activityExecute } from './activity/execute.js';
 
-import { data as activityTopData } from './activityTop/builder';
-import { execute as activityTopExecute } from './activityTop/execute';
+import { data as activityTopData } from './activityTop/builder.js';
+import { execute as activityTopExecute } from './activityTop/execute.js';
 
 
 // используем язык по умолчанию — 'en'

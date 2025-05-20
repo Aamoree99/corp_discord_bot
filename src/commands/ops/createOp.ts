@@ -8,10 +8,10 @@ import {
     ButtonStyle,
     TextChannel,
 } from 'discord.js';
-import { db } from '../../db/client';
-import { ops } from '../../db/schema';
-import { getGuildSettings } from '../../db/queries/getGuildSettings';
-import { getLocale } from '../../locales';
+import { db } from '../../db/client.js';
+import { ops } from '../../db/schema.js';
+import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
+import { getLocale } from '../../locales/index.js'; // если `locales/index.ts` существует
 
 export const data = new SlashCommandBuilder()
     .setName('create-op')

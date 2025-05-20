@@ -5,12 +5,12 @@ import {
     ButtonBuilder,
     ButtonStyle,
 } from 'discord.js';
-import { db } from '../../db/client';
-import { recruits } from '../../db/schema';
+import { db } from '../../db/client.js';
+import { recruits } from '../../db/schema.js';
 import { and, eq, sql } from 'drizzle-orm';
-import { getGuildSettings } from '../../db/queries/getGuildSettings';
-import { getLocale } from '../../locales';
-import {buildHistoryEmbed, getPaginationComponents} from "./utils";
+import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
+import { getLocale } from '../../locales/index.js'; // если locales = директория с index.ts
+import { buildHistoryEmbed, getPaginationComponents } from './utils.js';
 
 const PAGE_SIZE = 10;
 
