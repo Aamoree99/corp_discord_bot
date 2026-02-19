@@ -64,3 +64,12 @@ CREATE TABLE ping_responses (
                                 responded_at TIMESTAMP DEFAULT NOW(),
                                 UNIQUE(ping_id, user_id)
 );
+
+-- Performance indexes
+CREATE INDEX idx_ops_ping_window ON ops (ping_sent, start_time);
+CREATE INDEX idx_ops_guild_start_time ON ops (guild_id, start_time);
+CREATE INDEX idx_op_responses_op_response ON op_responses (op_id, response);
+CREATE INDEX idx_op_responses_user ON op_responses (user_id);
+CREATE INDEX idx_pings_guild_created_at ON pings (guild_id, created_at);
+CREATE INDEX idx_ping_responses_ping_response ON ping_responses (ping_id, response);
+CREATE INDEX idx_ping_responses_user ON ping_responses (user_id);

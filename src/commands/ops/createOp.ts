@@ -29,8 +29,8 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction: ChatInputCommandInteraction) {
     const guildId = interaction.guildId!;
     const userId = interaction.user.id;
-    const t = getLocale((await getGuildSettings(guildId)).language);
     const settings = await getGuildSettings(guildId);
+    const t = getLocale(settings.language);
 
     const member = interaction.member;
 

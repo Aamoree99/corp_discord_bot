@@ -1,9 +1,9 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
 import { db } from '../../db/client.js';
 import { ops, opResponses, pings, pingResponses } from '../../db/schema.js';
-import { eq, and, gte, inArray } from 'drizzle-orm';
+import { eq, and, gte, count } from 'drizzle-orm';
 import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
-import { getLocale } from '../../locales/index.js'; // если locales — это директория с index.ts
+import { getLocale } from '../../locales/index.js';
 
 
 export async function execute(interaction: ChatInputCommandInteraction) {
@@ -47,41 +47,62 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     const guildId = guild.id;
     const joinedAt = targetMember.joinedAt;
 
-    // 📥 Получаем все опсы и пинги после join
-    const opsAfter = await db.select().from(ops).where(and(
-        eq(ops.guildId, guildId),
-        gte(ops.startTime, joinedAt)
-    ));
+    const [
+        opsTotalRows,
+        pingsTotalRows,
+        opStatsRows,
+        pingStatsRows,
+    ] = await Promise.all([
+        db.select({ total: count() }).from(ops).where(and(
+            eq(ops.guildId, guildId),
+            gte(ops.startTime, joinedAt)
+        )),
+        db.select({ total: count() }).from(pings).where(and(
+            eq(pings.guildId, guildId),
+            gte(pings.createdAt, joinedAt)
+        )),
+        db
+            .select({
+                response: opResponses.response,
+                total: count(),
+            })
+            .from(opResponses)
+            .innerJoin(ops, eq(opResponses.opId, ops.id))
+            .where(and(
+                eq(opResponses.userId, userId),
+                eq(ops.guildId, guildId),
+                gte(ops.startTime, joinedAt),
+            ))
+            .groupBy(opResponses.response),
+        db
+            .select({
+                response: pingResponses.response,
+                total: count(),
+            })
+            .from(pingResponses)
+            .innerJoin(pings, eq(pingResponses.pingId, pings.id))
+            .where(and(
+                eq(pingResponses.userId, userId),
+                eq(pings.guildId, guildId),
+                gte(pings.createdAt, joinedAt),
+            ))
+            .groupBy(pingResponses.response),
+    ]);
 
-    const pingsAfter = await db.select().from(pings).where(and(
-        eq(pings.guildId, guildId),
-        gte(pings.createdAt, joinedAt)
-    ));
+    const counts = { yes: 0, no: 0, maybe: 0 };
+    for (const row of [...opStatsRows, ...pingStatsRows]) {
+        if (!row.response) continue;
+        if (row.response === 'yes' || row.response === 'no' || row.response === 'maybe') {
+            counts[row.response] += Number(row.total);
+        }
+    }
 
-    const opIds = opsAfter.map(o => o.id);
-    const pingIds = pingsAfter.map(p => p.id);
-
-    const opRes = opIds.length
-        ? await db.select().from(opResponses).where(and(
-            eq(opResponses.userId, userId),
-            inArray(opResponses.opId, opIds)
-        ))
-        : [];
-
-    const pingRes = pingIds.length
-        ? await db.select().from(pingResponses).where(and(
-            eq(pingResponses.userId, userId),
-            inArray(pingResponses.pingId, pingIds)
-        ))
-        : [];
-
-    // 📊 Подсчёт
-    const all = [...opRes.map(r => r.response), ...pingRes.map(r => r.response)];
-    const total = opIds.length + pingIds.length;
-    const yes = all.filter(r => r === 'yes').length;
-    const no = all.filter(r => r === 'no').length;
-    const maybe = all.filter(r => r === 'maybe').length;
-    const ignored = total - all.length;
+    const total = Number(opsTotalRows[0]?.total ?? 0) + Number(pingsTotalRows[0]?.total ?? 0);
+    const yes = counts.yes;
+    const no = counts.no;
+    const maybe = counts.maybe;
+    const answered = yes + no + maybe;
+    const ignored = Math.max(total - answered, 0);
 
     // 🧾 Embed
     const embed = new EmbedBuilder()

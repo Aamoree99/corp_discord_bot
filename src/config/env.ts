@@ -11,10 +11,13 @@ if (!process.env.DATABASE_URL) {
     throw new Error('❌ DATABASE_URL не указан в .env');
 }
 
+const parsedDbPoolMax = Number.parseInt(process.env.DB_POOL_MAX ?? '', 10);
+
 export const config = {
     token: process.env.BOT_TOKEN!,
     appId: process.env.BOT_APP_ID!,
     db: process.env.DATABASE_URL!,
+    dbPoolMax: Number.isFinite(parsedDbPoolMax) && parsedDbPoolMax > 0 ? parsedDbPoolMax : 10,
     env: process.env.NODE_ENV || 'production',
     devGuildId: process.env.DEV_GUILD_ID,
 };

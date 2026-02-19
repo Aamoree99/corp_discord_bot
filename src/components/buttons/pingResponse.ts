@@ -1,9 +1,6 @@
 import {
     ButtonInteraction,
     EmbedBuilder,
-    TextChannel,
-    NewsChannel,
-    ThreadChannel,
 } from 'discord.js';
 import { db } from '../../db/client.js';
 import { pingResponses, pings } from '../../db/schema.js';
@@ -41,7 +38,12 @@ export async function handle(interaction: ButtonInteraction) {
         return;
     }
 
-    const createdAt = new Date(ping.createdAt + 'Z');
+    const createdAt = ping.createdAt instanceof Date ? ping.createdAt : new Date(ping.createdAt);
+    if (Number.isNaN(createdAt.getTime())) {
+        await interaction.reply({ content: t.pings.notFound, ephemeral: true });
+        return;
+    }
+
     const pingAge = Date.now() - createdAt.getTime();
     if (pingAge > 15 * 60 * 1000) {
         await interaction.reply({ content: t.pings.expired, ephemeral: true });

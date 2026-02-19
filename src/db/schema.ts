@@ -7,6 +7,7 @@ import {
     integer,
     pgEnum,
     unique,
+    index,
 } from 'drizzle-orm/pg-core';
 
 // guild_settings
@@ -51,6 +52,11 @@ export const ops = pgTable('ops', {
     startTime: timestamp('start_time', { withTimezone: false}).notNull(),
     createdBy: text('created_by').notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => {
+    return {
+        idxOpsPingWindow: index('idx_ops_ping_window').on(table.pingSent, table.startTime),
+        idxOpsGuildStartTime: index('idx_ops_guild_start_time').on(table.guildId, table.startTime),
+    };
 });
 
 // op_responses
@@ -62,7 +68,9 @@ export const opResponses = pgTable('op_responses', {
     respondedAt: timestamp('responded_at', { withTimezone: true }).defaultNow(),
 }, (table) => {
     return {
-        uniqueOpUser: unique().on(table.opId, table.userId)
+        uniqueOpUser: unique().on(table.opId, table.userId),
+        idxOpResponsesOpResponse: index('idx_op_responses_op_response').on(table.opId, table.response),
+        idxOpResponsesUser: index('idx_op_responses_user').on(table.userId),
     };
 });
 
@@ -73,6 +81,10 @@ export const pings = pgTable('pings', {
     message: text('message').notNull(),
     createdBy: text('created_by').notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => {
+    return {
+        idxPingsGuildCreatedAt: index('idx_pings_guild_created_at').on(table.guildId, table.createdAt),
+    };
 });
 
 // ping_responses
@@ -84,6 +96,8 @@ export const pingResponses = pgTable('ping_responses', {
     respondedAt: timestamp('responded_at', { withTimezone: true }).defaultNow(),
 }, (table) => {
     return {
-        uniquePingUser: unique().on(table.pingId, table.userId)
+        uniquePingUser: unique().on(table.pingId, table.userId),
+        idxPingResponsesPingResponse: index('idx_ping_responses_ping_response').on(table.pingId, table.response),
+        idxPingResponsesUser: index('idx_ping_responses_user').on(table.userId),
     };
 });

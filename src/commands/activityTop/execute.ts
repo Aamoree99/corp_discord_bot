@@ -1,9 +1,9 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
 import { db } from '../../db/client.js';
 import { ops, opResponses, pings, pingResponses } from '../../db/schema.js';
-import { eq, and, gte, lt, inArray } from 'drizzle-orm';
+import { eq, and, gte, lt, count } from 'drizzle-orm';
 import { getGuildSettings } from '../../db/queries/getGuildSettings.js';
-import { getLocale } from '../../locales/index.js'; // если locales — директория с index.ts
+import { getLocale } from '../../locales/index.js';
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const guild = interaction.guild;
@@ -37,60 +37,54 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     // 📅 Период
     const range = interaction.options.getString('range', true); // 'all' | 'month'
 
-    let opsInRange, pingsInRange;
+    const opWhere = [eq(ops.guildId, guild.id)];
+    const pingWhere = [eq(pings.guildId, guild.id)];
 
     if (range === 'month') {
         const now = new Date();
         const year = now.getFullYear();
         const month = now.getMonth();
-
-        // начало прошлого месяца (1-е число)
         const fromDate = new Date(year, month - 1, 1);
-        // начало текущего месяца (1-е число)
         const toDate = new Date(year, month, 1);
 
-        // запросы с диапазоном [fromDate, toDate)
-        opsInRange = await db.select().from(ops).where(and(
-            eq(ops.guildId, guild.id),
-            gte(ops.startTime, fromDate),
-            lt(ops.startTime, toDate),
-        ));
-
-        pingsInRange = await db.select().from(pings).where(and(
-            eq(pings.guildId, guild.id),
-            gte(pings.createdAt, fromDate),
-            lt(pings.createdAt, toDate),
-        ));
-    } else {
-        // За всё время
-        opsInRange = await db.select().from(ops).where(eq(ops.guildId, guild.id));
-        pingsInRange = await db.select().from(pings).where(eq(pings.guildId, guild.id));
+        opWhere.push(gte(ops.startTime, fromDate), lt(ops.startTime, toDate));
+        pingWhere.push(gte(pings.createdAt, fromDate), lt(pings.createdAt, toDate));
     }
 
-    const opIds = opsInRange.map(op => op.id);
-    const pingIds = pingsInRange.map(p => p.id);
+    const [opYesRows, pingYesRows] = await Promise.all([
+        db
+            .select({
+                userId: opResponses.userId,
+                total: count(),
+            })
+            .from(opResponses)
+            .innerJoin(ops, eq(opResponses.opId, ops.id))
+            .where(and(
+                eq(opResponses.response, 'yes'),
+                ...opWhere,
+            ))
+            .groupBy(opResponses.userId),
+        db
+            .select({
+                userId: pingResponses.userId,
+                total: count(),
+            })
+            .from(pingResponses)
+            .innerJoin(pings, eq(pingResponses.pingId, pings.id))
+            .where(and(
+                eq(pingResponses.response, 'yes'),
+                ...pingWhere,
+            ))
+            .groupBy(pingResponses.userId),
+    ]);
 
-    const opYes = opIds.length
-        ? await db.select().from(opResponses).where(and(
-            eq(opResponses.response, 'yes'),
-            inArray(opResponses.opId, opIds)
-        ))
-        : [];
-
-    const pingYes = pingIds.length
-        ? await db.select().from(pingResponses).where(and(
-            eq(pingResponses.response, 'yes'),
-            inArray(pingResponses.pingId, pingIds)
-        ))
-        : [];
-
-    // 📊 Собираем счёт по userId
-    const allYes = [...opYes, ...pingYes];
     const stats = new Map<string, number>();
 
-    for (const r of allYes) {
-        const id = r.userId;
-        stats.set(id, (stats.get(id) ?? 0) + 1);
+    for (const row of opYesRows) {
+        stats.set(row.userId, (stats.get(row.userId) ?? 0) + Number(row.total));
+    }
+    for (const row of pingYesRows) {
+        stats.set(row.userId, (stats.get(row.userId) ?? 0) + Number(row.total));
     }
 
     const sorted = [...stats.entries()]
